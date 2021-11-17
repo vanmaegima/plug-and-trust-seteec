@@ -45,6 +45,12 @@ i2c_error_t axI2CInit(void **conn_ctx, const char *pDevName)
     U32 dev_addr = 0x00;
     char temp[DEV_NAME_BUFFER_SIZE] = { 0, };
 
+#if defined(WITH_LIB_SETEEC)
+    *conn_ctx = malloc(sizeof(int));
+    *(int*)(*conn_ctx) = axSmDevice;
+    return I2C_OK;
+#endif
+
     if (pDevName != NULL && (strcasecmp("none", pDevName) != 0) ) {
         if ((strlen(pDevName) + 1) < DEV_NAME_BUFFER_SIZE) {
             memcpy(temp, pDevName, strlen(pDevName));
