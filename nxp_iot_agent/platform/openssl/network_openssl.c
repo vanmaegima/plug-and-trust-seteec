@@ -106,7 +106,7 @@ int network_tcp_connect(const char *hostname, const int port, void* context)
     server = gethostbyname(hostname);
     if (server == NULL)
     {
-        IOT_AGENT_ERROR("ERROR, no such host");
+        IOT_AGENT_ERROR("ERROR, no such host (hostname = %s)", hostname);
         return 1;
     }
     bzero((char *) &serv_addr, sizeof(serv_addr));
@@ -149,7 +149,9 @@ int network_openssl_init(openssl_network_context_t* network_ctx) {
 	ERR_load_crypto_strings();
 	SSL_load_error_strings();
 #else	
-	OPENSSL_init_crypto(OPENSSL_INIT_LOAD_CONFIG, NULL);
+       OPENSSL_INIT_SETTINGS *settings = OPENSSL_INIT_new();
+       OPENSSL_INIT_set_config_filename(settings, "/etc/ssl/openssl_conf_sss.cnf");
+       OPENSSL_init_crypto(OPENSSL_INIT_LOAD_CONFIG, settings);
 #endif
 
 	ENGINE *e = ENGINE_by_id(NETWORK_OPENSSL_ENGINE_ID);
