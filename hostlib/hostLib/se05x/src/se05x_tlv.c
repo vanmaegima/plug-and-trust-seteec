@@ -3,6 +3,9 @@
  * Copyright 2019-2020 NXP
  * SPDX-License-Identifier: Apache-2.0
  */
+#if defined(WITH_LIB_SETEEC)
+#include "se_tee.h"
+#endif
 
 #include "se05x_tlv.h"
 #include "se05x_const.h"
@@ -421,6 +424,7 @@ int tlvGet_TimeStamp(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05x
 
 smStatus_t DoAPDUTx_s_Case3(Se05xSession_t *pSessionCtx, const tlvHeader_t *hdr, uint8_t *cmdBuf, size_t cmdBufLen)
 {
+#if !defined(WITH_LIB_SETEEC)
     uint8_t rxBuf[SE05X_TLV_BUF_SIZE_RSP + 2];
     size_t rxBufLen       = sizeof(rxBuf);
     smStatus_t apduStatus = SM_NOT_OK;
@@ -431,6 +435,15 @@ smStatus_t DoAPDUTx_s_Case3(Se05xSession_t *pSessionCtx, const tlvHeader_t *hdr,
         apduStatus = pSessionCtx->fp_TXn(pSessionCtx, hdr, cmdBuf, cmdBufLen, rxBuf, &rxBufLen, 0);
     }
     return apduStatus;
+#else
+    uint8_t rspBuf[SE05X_TLV_BUF_SIZE_RSP + 2];
+    size_t pRspBufLen = sizeof(rspBuf);
+
+    if (se_apdu_request(SE_APDU_CASE_3, hdr->hdr, 4, cmdBuf, cmdBufLen, rspBuf, &pRspBufLen))
+        return SM_NOT_OK;
+
+    return SM_OK;
+#endif
 }
 
 smStatus_t DoAPDUTxRx_s_Case2(Se05xSession_t *pSessionCtx,
@@ -440,6 +453,7 @@ smStatus_t DoAPDUTxRx_s_Case2(Se05xSession_t *pSessionCtx,
     uint8_t *rspBuf,
     size_t *pRspBufLen)
 {
+#if !defined(WITH_LIB_SETEEC)
     smStatus_t apduStatus;
     if (pSessionCtx->fp_TXn == NULL) {
         apduStatus = SM_NOT_OK;
@@ -448,6 +462,12 @@ smStatus_t DoAPDUTxRx_s_Case2(Se05xSession_t *pSessionCtx,
         apduStatus = pSessionCtx->fp_TXn(pSessionCtx, hdr, cmdBuf, cmdBufLen, rspBuf, pRspBufLen, 0);
     }
     return apduStatus;
+#else
+    if (se_apdu_request(SE_APDU_CASE_2, hdr->hdr, 4, cmdBuf, cmdBufLen, rspBuf, pRspBufLen))
+        return SM_NOT_OK;
+
+    return SM_OK;
+#endif
 }
 
 smStatus_t DoAPDUTxRx_s_Case4(Se05xSession_t *pSessionCtx,
@@ -457,6 +477,7 @@ smStatus_t DoAPDUTxRx_s_Case4(Se05xSession_t *pSessionCtx,
     uint8_t *rspBuf,
     size_t *pRspBufLen)
 {
+#if !defined(WITH_LIB_SETEEC)
     smStatus_t apduStatus;
     if (pSessionCtx->fp_TXn == NULL) {
         apduStatus = SM_NOT_OK;
@@ -465,6 +486,12 @@ smStatus_t DoAPDUTxRx_s_Case4(Se05xSession_t *pSessionCtx,
         apduStatus = pSessionCtx->fp_TXn(pSessionCtx, hdr, cmdBuf, cmdBufLen, rspBuf, pRspBufLen, 0);
     }
     return apduStatus;
+#else
+    if (se_apdu_request(SE_APDU_CASE_4, hdr->hdr, 4, cmdBuf, cmdBufLen, rspBuf, pRspBufLen))
+        return SM_NOT_OK;
+
+    return SM_OK;
+#endif
 }
 
 smStatus_t DoAPDUTxRx_s_Case4_ext(Se05xSession_t *pSessionCtx,
@@ -474,6 +501,7 @@ smStatus_t DoAPDUTxRx_s_Case4_ext(Se05xSession_t *pSessionCtx,
     uint8_t *rspBuf,
     size_t *pRspBufLen)
 {
+#if !defined(WITH_LIB_SETEEC)
     smStatus_t apduStatus = SM_NOT_OK;
     if (pSessionCtx->fp_TXn == NULL) {
         apduStatus = SM_NOT_OK;
@@ -482,6 +510,12 @@ smStatus_t DoAPDUTxRx_s_Case4_ext(Se05xSession_t *pSessionCtx,
         apduStatus = pSessionCtx->fp_TXn(pSessionCtx, hdr, cmdBuf, cmdBufLen, rspBuf, pRspBufLen, 1);
     }
     return apduStatus;
+#else
+    if (se_apdu_request(SE_APDU_CASE_4E, hdr->hdr, 4, cmdBuf, cmdBufLen, rspBuf, pRspBufLen))
+        return SM_NOT_OK;
+
+    return SM_OK;
+#endif
 }
 
 smStatus_t DoAPDUTxRx(
