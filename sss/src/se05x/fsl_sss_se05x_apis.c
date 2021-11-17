@@ -323,6 +323,11 @@ sss_status_t sss_se05x_session_open(sss_se05x_session_t *session,
 
     memset(session, 0, sizeof(*session));
 
+#if defined(WITH_LIB_SETEEC)
+    session->subsystem = subsystem;
+    return kStatus_SSS_Success;
+#endif
+
     ENSURE_OR_GO_EXIT(connectionData);
     pAuthCtx = (SE05x_Connect_Ctx_t *)connectionData;
 
