@@ -21,6 +21,9 @@ OPTION(WithOPCUA_open62541 "Compile With open62541 Support" OFF)
 #> Create shared libraries.  Applicable for Engine DLL and other use cases.
 OPTION(WithSharedLIB "Create and use shared libraries" OFF)
 
+#> Compile with OP-TEE SE TEEC support. Disabled by default.
+OPTION(WithSETEEC "Compile with OP-TEE SE TEEC support" OFF)
+
 # NXP Internal Options
 # ============================================
 #
