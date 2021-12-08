@@ -1,0 +1,36 @@
+
+ src/se05x/fsl_sss_se05x_scp03.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/se05x/fsl_sss_se05x_scp03.c b/src/se05x/fsl_sss_se05x_scp03.c
+index a189a5e3..dba5054a 100644
+--- a/src/se05x/fsl_sss_se05x_scp03.c
++++ b/src/se05x/fsl_sss_se05x_scp03.c
+@@ -157,7 +157,7 @@ sss_status_t nxScp03_AuthenticateChannel(pSe05xSession_t se05xSession, NXSCP03_A
+     else {
+         // At this stage we have authenticated successfully.
+         status                  = kStatus_SSS_Success;
+-        pDyn_ctx->SecurityLevel = (C_MAC | C_ENC | R_MAC | R_ENC);
++		pDyn_ctx->SecurityLevel = 0; //  (C_MAC | C_ENC | R_MAC | R_ENC);
+         memcpy(pDyn_ctx->cCounter, commandCounter, AES_KEY_LEN_nBYTE);
+         LOG_D("Authentication Successful!!!");
+     }
+@@ -180,7 +180,7 @@ static sss_status_t nxScp03_GP_ExternalAuthenticate(
+     sss_status_t status       = kStatus_SSS_Fail;
+ 
+     tlvHeader_t hdr = {
+-        {CLA_GP_7816 | CLA_GP_SECURITY_BIT, INS_GP_EXTERNAL_AUTHENTICATE, SECLVL_CDEC_RENC_CMAC_RMAC, 0x00}};
++        {CLA_GP_7816 | CLA_GP_SECURITY_BIT, INS_GP_EXTERNAL_AUTHENTICATE, 0 /* SECLVL_CDEC_RENC_CMAC_RMAC */, 0x00}};
+ 
+     LOG_D("FN: %s", __FUNCTION__);
+     LOG_MAU8_D(" Input: hostCryptogram", hostCryptogram, SCP_COMMAND_MAC_SIZE);
+@@ -188,7 +188,7 @@ static sss_status_t nxScp03_GP_ExternalAuthenticate(
+     txBuf[0] = CLA_GP_7816 | CLA_GP_SECURITY_BIT; //Set CLA Byte
+ 
+     txBuf[1] = INS_GP_EXTERNAL_AUTHENTICATE; //Set INS Byte
+-    txBuf[2] = SECLVL_CDEC_RENC_CMAC_RMAC;   //Set Security Level
++    txBuf[2] = 0 /* SECLVL_CDEC_RENC_CMAC_RMAC */;   //Set Security Level
+ 
+     txBuf[3] = 0x00;
+     txBuf[4] = 0x10; // The Lc value is set as-if the MAC has already been appended (SCP03 spec p16. Fig.6-1)
+

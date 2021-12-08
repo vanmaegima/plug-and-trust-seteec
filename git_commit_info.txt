@@ -1,0 +1,38 @@
+commit 1765d16b1934654f7123a4882ba2365c971c1cf4
+Author: Sujay G Kulkarni <sujayg.kulkarni@nxp.com>
+Date:   Mon Jun 28 15:33:13 2021 +0200
+
+    Pull request #1755: feature/version_update
+    
+    Merge in SIMW/simw-top from feature/version_update to develop
+    
+    Squashed commit of the following:
+    
+    commit ff364f3c02372b5da9990d63b8d0b117f0603ed8
+    Author: sujaygkulkarni <sujayg.kulkarni@nxp.com>
+    Date:   Mon Jun 28 18:59:18 2021 +0530
+    
+        version update
+
+diff --git a/exhaledocs/doc/appendix/nxp_iot_agent_version_info.rst.txt b/exhaledocs/doc/appendix/nxp_iot_agent_version_info.rst.txt
+index edb82101..0ae4f5c1 100644
+--- a/exhaledocs/doc/appendix/nxp_iot_agent_version_info.rst.txt
++++ b/exhaledocs/doc/appendix/nxp_iot_agent_version_info.rst.txt
+@@ -1,7 +1,7 @@
+ 
+ .. |NXP_IOT_AGENT_PRODUCT_NAME|   replace:: :samp:`nxp_iot_agent`
+-.. |NXP_IOT_AGENT_VER_STR|        replace:: :samp:`v03.01.00`
+-.. |NXP_IOT_AGENT_VER_STR_FULL|   replace:: :samp:`v03.01.00_20210330`
++.. |NXP_IOT_AGENT_VER_STR|        replace:: :samp:`v03.03.00`
++.. |NXP_IOT_AGENT_VER_STR_FULL|   replace:: :samp:`v03.03.00_20210628`
+ .. |NXP_IOT_AGENT_MAJOR|          replace:: :samp:`03`
+-.. |NXP_IOT_AGENT_MINOR|          replace:: :samp:`01`
++.. |NXP_IOT_AGENT_MINOR|          replace:: :samp:`03`
+ .. |NXP_IOT_AGENT_DEV|            replace:: :samp:`00`
+diff --git a/nxp_iot_agent b/nxp_iot_agent
+index fa3ffca3..f2700842 160000
+--- a/nxp_iot_agent
++++ b/nxp_iot_agent
+@@ -1 +1 @@
+-Subproject commit fa3ffca32b4d9083fd9076d8ad6e83ed571a92a2
++Subproject commit f2700842d5886baa811d4902365eeaf34c937695
