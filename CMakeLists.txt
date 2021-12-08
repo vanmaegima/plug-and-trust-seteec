@@ -100,8 +100,6 @@ IF(WithExtCustomerTPMCode)
     ENDIF()
 ENDIF()
 
-ADD_SUBDIRECTORY(demos)
-
 IF(NXPProprietary)
     IF(WithHostCrypto_OPENSSL)
         IF(WithApplet_SE05X)
