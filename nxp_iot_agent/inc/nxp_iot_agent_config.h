@@ -147,7 +147,7 @@
 /**
 * Flag to enable or disable measurement performance timings of EdgeLock 2GO Agent.
 */
-#define IOT_AGENT_TIME_MEASUREMENT_ENABLE     1
+#define IOT_AGENT_TIME_MEASUREMENT_ENABLE     0
 
 /**
 * Flag to enable or disable claimcode injection into secure element.
