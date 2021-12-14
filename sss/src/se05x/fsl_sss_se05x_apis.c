@@ -324,6 +324,47 @@ sss_status_t sss_se05x_session_open(sss_se05x_session_t *session,
     memset(session, 0, sizeof(*session));
 
 #if defined(WITH_LIB_SETEEC)
+    uint8_t applet_version[7] = { 0 };
+    size_t applet_versionLen = sizeof(applet_version);
+    U32 appletVersion;
+    smStatus_t ret;
+
+    ret = Se05x_API_GetVersion(NULL, applet_version, &applet_versionLen);
+    if (ret != SM_OK)
+	return kStatus_SSS_Fail;
+
+    if (applet_versionLen == 5 || applet_versionLen == 4 || applet_versionLen == 7) {
+        appletVersion = 0;
+        appletVersion |= applet_version[0];
+        appletVersion <<= 8;
+        appletVersion |= applet_version[1];
+        appletVersion <<= 8;
+        appletVersion |= applet_version[2];
+        appletVersion <<= 8;
+
+        if (HEX_EXPECTED_APPLET_VERSION == (0xFFFFFF00 & appletVersion)) {
+		/* Fine */
+	}
+#if defined(HEX_EXPECTED_APPLET_VERSION_PATCH1)
+        else if (HEX_EXPECTED_APPLET_VERSION_PATCH1 == (0xFFFFFF00 & appletVersion)) {
+		/* Fine */
+	}
+#endif
+        else if ((0xFFFFFF00 & appletVersion) < HEX_EXPECTED_APPLET_VERSION) {
+             LOG_E("Mismatch Applet version.");
+             LOG_E("Compiled for 0x%X. Got older 0x%X",
+                   (HEX_EXPECTED_APPLET_VERSION) >> 8,
+                   (appletVersion) >> 8);
+             LOG_E("Aborting!!!");
+             return kStatus_SSS_Fail;
+        } else {
+            LOG_I("Newer version of Applet Found");
+            LOG_I("Compiled for 0x%X. Got newer 0x%X",
+                  (HEX_EXPECTED_APPLET_VERSION) >> 8,
+                  (appletVersion) >> 8);
+        }
+    }
+
     session->subsystem = subsystem;
     return kStatus_SSS_Success;
 #endif
