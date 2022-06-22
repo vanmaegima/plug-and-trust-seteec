@@ -94,9 +94,11 @@ sss_algorithm_t getEncryptAlgorithmfromPaddingType(int padding, int bit_length)
     case RSA_NO_PADDING: {
         algo = kAlgorithm_SSS_RSASSA_NO_PADDING;
     } break;
+#if (OPENSSL_VERSION_NUMBER < 0x30000000L)
     case RSA_SSLV23_PADDING: {
         algo = kAlgorithm_None;
     } break;
+#endif
     case RSA_PKCS1_OAEP_PADDING: {
         switch (bit_length) {
         case 1024:
