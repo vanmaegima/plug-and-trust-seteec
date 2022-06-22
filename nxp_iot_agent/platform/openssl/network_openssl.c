@@ -398,7 +398,7 @@ int network_verify_server_certificate(void* opaque_ctx, uint8_t* trusted_bytes, 
 	// Note: SSL_get_peer_certificate does NOT increment the reference counter on 
 	// any certificate. The ownership stays with the SSL object!
 	untrusted = SSL_get_peer_cert_chain(ssl);
-	NETWORK_ASSERT_OR_EXIT_MSG(sk_X509_num > 0, "No untrusted server certs found.");
+	NETWORK_ASSERT_OR_EXIT_MSG(sk_X509_num(untrusted) > 0, "No untrusted server certs found.");
 	to_be_verified = sk_X509_value(untrusted, 0);
 	NETWORK_ASSERT_OR_EXIT_MSG(to_be_verified != NULL, "Cannot extract server certificate from untrusted certificates.");
 
